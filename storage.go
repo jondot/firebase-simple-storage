@@ -91,15 +91,22 @@ func (s *Storage) Download(path, toFile string) error {
 	return err
 }
 
+// DownloadURL returns a convenience download url to a file.
+// You can get the `downloadToken` under the `downloadTokens` field (notice
+// plural) from `Storage.Object`, or immediately after a `Storeage.Put`.
+func (s *Storage) DownloadURL(path, downloadToken string) string {
+	return fmt.Sprintf("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media&token=%s",
+		s.Bucket,
+		url.QueryEscape(path),
+		downloadToken,
+	)
+}
+
 // Read will read a file from Firebase storage, providing the bytes over an `io.ReadClose`
 // `path` - object path in firebase
 // `downloadToken` - a token retrieved from `Storage.Object`
 func (s *Storage) Read(path, downloadToken string) (io.ReadCloser, error) {
-	resp, err := http.Get(fmt.Sprintf("https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media&token=%s",
-		s.Bucket,
-		url.QueryEscape(path),
-		downloadToken,
-	))
+	resp, err := http.Get(s.DownloadUrl(path, downloadToken))
 	return resp.Body, err
 }
 
