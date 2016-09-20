@@ -106,7 +106,7 @@ func (s *Storage) DownloadURL(path, downloadToken string) string {
 // `path` - object path in firebase
 // `downloadToken` - a token retrieved from `Storage.Object`
 func (s *Storage) Read(path, downloadToken string) (io.ReadCloser, error) {
-	resp, err := http.Get(s.DownloadUrl(path, downloadToken))
+	resp, err := http.Get(s.DownloadURL(path, downloadToken))
 	return resp.Body, err
 }
 
