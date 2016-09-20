@@ -3,8 +3,12 @@
 An unofficial Go based client for Firebase storage that preserves security
 (this goes through Firebase and not Google Cloud Storage).
 
-You can use this to upload files pinned to a specific user authentication credentials (upload in
-the name of a user) from backend services or background jobs.
+You can use this to upload files while pinned to user authentication credentials (upload in
+the name of a user) from backend services or background jobs that may run on a user's machine.
+
+A good use case for this is when you distribute an app that isn't Web, mobile or backend (obviously),
+and don't want to compromise app-level credentials.
+
 
 ## Quick Start
 
